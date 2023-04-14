@@ -128,7 +128,7 @@ class Pic:
 
 
     def annotate_point(self, ax, point, text_str):
-        ax.annotate(text_str, (point.x, point.y))
+        ax.annotate(text_str, (point.x, point.y), color='red')
 
     def connect_two_points_by_arrow(self, ax, point_from, point_to):
         arrow = mpatches.FancyArrowPatch((point_from.x, point_from.y), (point_to.x, point_to.y),
@@ -176,6 +176,7 @@ if __name__ == '__main__':
     pic.draw_point(ax, center_point, '1')
     pic.draw_point(ax, next_point)
     pic.connect_two_points_by_arrow(ax, center_point, next_point)
+    pic.annotate_point(ax, next_point, 'bla bla')
 
     plt.show()
     plt.close(fig)
