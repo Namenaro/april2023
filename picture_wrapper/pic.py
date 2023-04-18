@@ -1,4 +1,6 @@
-from common_utils import Point, Distr, CoordSelector
+from common_utils import Point, Distr
+from picture_wrapper import ClickedData
+from clicker import CoordSelector
 
 import numpy as np
 import random
@@ -9,7 +11,7 @@ import matplotlib.cm as cm
 import matplotlib.patches as mpatches
 import matplotlib
 from math import ceil
-import jsonpickle
+
 
 class Pic:
     def __init__(self, numpy_pic=None):
@@ -87,10 +89,10 @@ class Pic:
         X = self.img.shape[1]
         return X, Y
 
-    def set_point_color(self, point, color):
-        self.img[point.y][point.x] = color
+    def set_point_val(self, point, val):
+        self.img[point.y][point.x] = val
 
-    def get_mean_color_in_point_cloud(self, point_cloud):
+    def get_mean_val_in_point_cloud(self, point_cloud):
         mass = 0
         for point in point_cloud:
             mass += self.get_val_in_point(point)
@@ -102,21 +104,21 @@ class Pic:
             vals_cloud.append(self.get_val_in_point(point))
         return vals_cloud
 
-    def get_vals_cloud_eround_point(self, point, radius):
+    def get_vals_cloud_around_point(self, point, radius):
         point_cloud = self.get_point_cloud(point, radius)
         return self.get_vals_of_point_cloud(point_cloud)
 
     def select_in_hand_mode_with_radiuses(self):
         devcr = CoordSelector(self.img, need_radiuses=True)
         points, radiuses = devcr.create_device()
-        data_from_pic = DataFromPic()
+        data_from_pic = ClickedData()
         data_from_pic.set_data(points, radiuses)
         return data_from_pic
 
     def select_in_hand_mode_without_radiuses(self):
         devcr = CoordSelector(self.img, need_radiuses=False)
         points, radiuses = devcr.create_device()
-        data_from_pic = DataFromPic()
+        data_from_pic = ClickedData()
         data_from_pic.set_data(points, radiuses=None)
         return data_from_pic
 
@@ -142,27 +144,6 @@ class Pic:
             str_for_point='$'+str_for_point + '$'
         ax.scatter(point.x, point.y, c=[color], marker=str_for_point, alpha=0.6, s=200)
 
-
-class DataFromPic:
-    def __init__(self):
-        self.radiuses = []
-        self.points = []
-
-    def set_data(self, radiuses, points):
-        self.radiuses = radiuses
-        self.points = points
-
-    def save_to_file(self, filename = "hand_select.pkl"):
-        encoded = jsonpickle.encode(self)
-
-        with open(filename, "w") as write_file:
-            write_file.write(encoded)
-
-    def load_from_file(self, filename = "hand_select.pkl"):
-        with open(filename, "r") as read_file:
-            loaded = read_file.read()
-            decoded = jsonpickle.decode(loaded)
-            self.set_data(decoded.radiuses, decoded.points)
 
 
 if __name__ == '__main__':

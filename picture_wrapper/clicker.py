@@ -1,9 +1,7 @@
-
 from common_utils import Point
 
 import matplotlib.pyplot as plt
 import math
-import jsonpickle
 
 
 # правая кропка закрыть
@@ -49,3 +47,4 @@ class CoordSelector:
         plt.imshow(self.image, cmap='gray')
         plt.show()
         return self.result_points, self.result_radiuses
+    
