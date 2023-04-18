@@ -17,4 +17,4 @@ class Region:
 
     def send_to_pic(self, pic):
         for point in self.points:
-            pic.set_point_val(point, color=self.mean)
+            pic.set_point_val(point, self.mean)

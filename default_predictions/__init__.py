@@ -1,0 +1,1 @@
+from .predictions_generator_naive import DefaultPredictionsGeneratorNaive

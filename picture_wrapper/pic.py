@@ -1,6 +1,5 @@
 from common_utils import Point, Distr
-from picture_wrapper import ClickedData
-from clicker import CoordSelector
+from picture_wrapper import *
 
 import numpy as np
 import random
