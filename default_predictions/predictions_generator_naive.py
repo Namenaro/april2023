@@ -1,6 +1,6 @@
 from common_utils import IdsGenerator, Point
 from picture_wrapper import Pic
-from region_of_pic import Region
+from .region_of_pic import Region
 
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
